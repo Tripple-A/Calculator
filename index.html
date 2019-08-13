@@ -58,7 +58,9 @@
         <div id='calculator'>
         <div id='block'>
         <div id='container'></div>
-        <div id='result'></div>
+        <div id='result'>
+         <p></p>
+        </div>
         </div>
         <button id="1" class="num"> 1</button>
         <button id="2" class="num">2</button>
@@ -102,7 +104,6 @@
             
             })
             function c(){
-               // window.location.reload(false)
                result.innerText="";
                screen.innerText=""
                 
@@ -113,59 +114,54 @@
             }
             function back(){
                screen.innerText= screen.innerText.slice(0,-1);
-               result.innerText=result.innerText.slice(0,-1)
+               result.innerText=""
             }
                 
             function add(content){
-                
-               // let content=screen.innerText
                 let x=content.split('+');
                 let y=0;
                 for(let i=0;i<x.length;i++){ 
                     y+=parseFloat(x[i])
                 } 
-               //if(!isNaN(y)){ screen.innerText=y };
+              
                return y
             }
 
             function multiply(content){
-               // let content=screen.innerText
-                let x=content.split('*');
+              let x=content.split('*');
                 let y=1;
                 for(let i=0;i<x.length;i++){ 
                     y*=parseFloat(x[i])
                 } 
-               //if(!isNaN(y)){ result.innerText=y }
                 return  y
             }
 
             function subtract(content){
-                //let content=screen.innerText
+                
                 let x=content.split('-');
                 let y=parseFloat(x[0]);
                 for(let i=1;i<x.length;i++){
                     y-=parseFloat(x[i])
                 }
-               //if(!isNaN(y)){ result.innerText=y }
                 return y
-
-            }
+                }
 
             function divide(content){
-                //let content=screen.innerText;
+                
                 let x=content.split('/');
                 let y=parseFloat(x[0]);
                 for(let i=1;i<x.length;i++){
                     if(x[i]=='0'){ 
                         let y="error"; 
+                        
                         result.innerText=y;
-                        result.style.color="red"
+                        
                         return "Error"
                         }
-                  else {  y/=parseFloat(x[i]); return (Math.round( y*10)/10)}
+                  else {  
+                      y/=parseFloat(x[i]); 
+                      return (Math.round( y*10)/10)}
                 }
-              // if(!isNaN(y)){ result.innerText=y }
-                
             }
            
                          
@@ -196,7 +192,10 @@
 
             let finalAnswer=subtract(string)
 
-            
+            if(result.innerText=="error"||result.innerText=="Infinity"){
+                result.style.color="red"
+            }
+            else{result.style.color="black"}
             
             
             
