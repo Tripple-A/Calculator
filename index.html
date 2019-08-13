@@ -7,7 +7,7 @@
         <style>
         #calculator{
             width: 300px;
-            height:330px;
+            height:400px;
             border:2px solid black;
             border-radius:5px ;
             margin:0 auto;
@@ -46,6 +46,10 @@
             color:firebrick;
             text-align: center
         }
+
+        #back{
+            width:150px;
+        }
         
         </style>
     </head>
@@ -74,14 +78,15 @@
         <button id="+" class="num operators">+</button>
         <button id="-" class="num operators">-</button>
         <button id="/" class="num operators">/</button>
-        
         <button id='*' class="num operators">*</button>
+        <br>
+        <button id= "back" onclick="back()">BACKSPACE</button>
         
         </div>
         <script>
             const screen=document.getElementById('container')
-            
             const result=document.getElementById('result')
+            result.style.color="black"
             const block=document.getElementById('block')
             block.style.width='250px'
             block.style.height="60px"
@@ -106,7 +111,10 @@
                 screen.innerText=result.innerText;
                 result.innerText="";
             }
-            
+            function back(){
+               screen.innerText= screen.innerText.slice(0,-1);
+               result.innerText=result.innerText.slice(0,-1)
+            }
                 
             function add(content){
                 
@@ -148,7 +156,12 @@
                 let x=content.split('/');
                 let y=parseFloat(x[0]);
                 for(let i=1;i<x.length;i++){
-                    if(x[i]=='0'){return "0"}
+                    if(x[i]=='0'){ 
+                        let y="error"; 
+                        result.innerText=y;
+                        result.style.color="red"
+                        return "Error"
+                        }
                   else {  y/=parseFloat(x[i]); return (Math.round( y*10)/10)}
                 }
               // if(!isNaN(y)){ result.innerText=y }
