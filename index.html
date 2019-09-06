@@ -77,10 +77,10 @@
         <button onclick="c()"> Clear </button>
         <button id="=" onclick="move()">=</button>
         <br>
-        <button id="+" class="num operators">+</button>
-        <button id="-" class="num operators">-</button>
-        <button id="/" class="num operators">/</button>
-        <button id='*' class="num operators">*</button>
+        <button id="+" class="operators">+</button>
+        <button id="-" class="operators">-</button>
+        <button id="/" class="operators">/</button>
+        <button id='*' class="operators">*</button>
         <br>
         <button id= ""  class="back num" onclick="back()">BACKSPACE</button>
         
@@ -93,16 +93,30 @@
             block.style.width='250px'
             block.style.height="60px"
             block.style.border="2px solid black"
+            
             const btn=document.querySelectorAll('.num')
             btn.forEach(function (button){
                 const identity=button.id
-            button.addEventListener("click",function(append){
-                screen.append(identity)
+                button.addEventListener("click",function(append){
                 const calculation=screen.innerText
-                operate(calculation)
+               if(calculation.length<22){
+                    screen.append(identity)}
+                    operate(screen.innerText)
+            })})
+            
+            const operato=document.querySelectorAll('.operators')
+            operato.forEach(function(sign){
+                
+                sign.addEventListener("click",function(){
+                    const clicked=screen.innerText.charAt(screen.innerText.length-1)
+                    
+                    if(screen.innerText.length<21&& clicked!='+'&&clicked!='-'&&clicked!='*'&&clicked!='/'){
+                        screen.append(sign.id)
+                    }
+                 })
             })
             
-            })
+
             function c(){
                result.innerText="";
                screen.innerText=""
@@ -196,13 +210,9 @@
                 result.style.color="red"
             }
             else{result.style.color="black"}
-            
-            
-            
-            
-            console.log(finalAnswer)
 
-            if(!isNaN(finalAnswer)){result.innerText=finalAnswer}
+            if(!isNaN(finalAnswer)&&finalAnswer!=screen.innerText)
+            {result.innerText=finalAnswer}
             }
         
             
