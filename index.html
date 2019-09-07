@@ -174,7 +174,8 @@
                         }
                   else {  
                       y/=parseFloat(x[i]); 
-                      return (Math.round( y*10)/10)}
+                      //return (Math.round( y*10)/10)}
+                      return y}
                 }
             }
            
@@ -196,15 +197,15 @@
                  }
             }
 
-            const array3=string.split(/[-]/);
+            const array3=string.split(/[+]/);
             for(let i=0;i<array3.length;i++){
-                if (array3[i].includes('+')){
-                   let z= add(array3[i]);
+                if (array3[i].includes('-')){
+                   let z= subtract(array3[i]);
                     string=string.replace(array3[i],z);
                  }
             }
 
-            let finalAnswer=subtract(string)
+            let finalAnswer=add(string)
 
             if(result.innerText=="error"||result.innerText=="Infinity"){
                 result.style.color="red"
@@ -212,11 +213,11 @@
             else{result.style.color="black"}
 
             if(!isNaN(finalAnswer)&&finalAnswer!=screen.innerText)
-            {result.innerText=finalAnswer}
+            {result.innerText=Math.round(finalAnswer*1000)/1000}
             }
         
             
             
         </script>
     </body>
-</html>
+    </html>

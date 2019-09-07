@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>BIODUN'S CALCULATOR</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width initial-scale=1.0">
+        <style>
+        #calculator{
+            width: 300px;
+            height:400px;
+            border:2px solid black;
+            border-radius:5px ;
+            margin:0 auto;
+            display:block;
+            text-align:center;
+            font-size: 150%;
+            background: lightskyblue
+        }
+        button{
+            width:50px;
+            height:50px;
+            border-radius:5px;
+            margin-left: 10px;
+            margin-bottom: 10px;
+            margin-top:2px;
+            background: blue;
+        }
+        #block{
+            border-radius:5px ;
+            margin:10px auto;
+            display:block;
+            text-align: left;
+            background: deepskyblue
+        }
+        #container{
+            font-size: 90%
+        }
+        #result{
+            text-align: left
+        }
+        h1{
+            font-family:cursive;
+            color:firebrick;
+            text-align: center
+        }
+        .back{
+            width:150px;
+        }
+        
+        </style>
+    </head>
+    <body>
+        <h1>BIODUN'S CALCULATOR</h1>
+        <div id='calculator'>
+        <div id='block'>
+        <div id='container'></div>
+        <div id='result'>
+         <p></p>
+        </div>
+        </div>
+        <button id="1" class="num"> 1</button>
+        <button id="2" class="num">2</button>
+        <button id="3" class="num">3</button>
+        <button id="4" class="num">4</button>
+        <br>
+        <button id="5" class="num">5</button>
+        <button id="6" class="num">6</button>
+        <button id="7" class="num">7</button>
+        <button id="8" class="num">8</button>
+        <br>
+        <button id="9" class="num">9</button>
+        <button id="0" class="num">0</button>
+        <button onclick="c()"> Clear </button>
+        <button id="=" onclick="move()">=</button>
+        <br>
+        <button id="+" class="operators">+</button>
+        <button id="-" class="operators">-</button>
+        <button id="/" class="operators">/</button>
+        <button id='*' class="operators">*</button>
+        <br>
+        <button id= ""  class="back num" onclick="back()">BACKSPACE</button>
+        
+        </div>
+        <script>
+            const screen=document.getElementById('container')
+            const result=document.getElementById('result')
+            result.style.color="black"
+            const block=document.getElementById('block')
+            block.style.width='250px'
+            block.style.height="60px"
+            block.style.border="2px solid black"
+            
+            const btn=document.querySelectorAll('.num')
+            btn.forEach(function (button){
+                const identity=button.id
+                button.addEventListener("click",function(append){
+                const calculation=screen.innerText
+               if(calculation.length<22){
+                    screen.append(identity)}
+                    operate(screen.innerText)
+            })})
+            
+            const operato=document.querySelectorAll('.operators')
+            operato.forEach(function(sign){
+                
+                sign.addEventListener("click",function(){
+                    const clicked=screen.innerText.charAt(screen.innerText.length-1)
+                    
+                    if(screen.innerText.length<21&& clicked!='+'&&clicked!='-'&&clicked!='*'&&clicked!='/'){
+                        screen.append(sign.id)
+                    }
+                 })
+            })
+            
+            function c(){
+               result.innerText="";
+               screen.innerText=""
+                
+            } 
+            function move(){
+                screen.innerText=result.innerText;
+                result.innerText="";
+            }
+            function back(){
+               screen.innerText= screen.innerText.slice(0,-1);
+               result.innerText=""
+            }
+                
+            function add(content){
+                let x=content.split('+');
+                let y=0;
+                for(let i=0;i<x.length;i++){ 
+                    y+=parseFloat(x[i])
+                } 
+              
+               return y
+            }
+            function multiply(content){
+              let x=content.split('*');
+                let y=1;
+                for(let i=0;i<x.length;i++){ 
+                    y*=parseFloat(x[i])
+                } 
+                return  y
+            }
+            function subtract(content){
+                
+                let x=content.split('-');
+                let y=parseFloat(x[0]);
+                for(let i=1;i<x.length;i++){
+                    y-=parseFloat(x[i])
+                }
+                return y
+                }
+            function divide(content){
+                
+                let x=content.split('/');
+                let y=parseFloat(x[0]);
+                for(let i=1;i<x.length;i++){
+                    if(x[i]=='0'){ 
+                        let y="error"; 
+                        
+                        result.innerText=y;
+                        
+                        return "Error"
+                        }
+                  else {  
+                      y/=parseFloat(x[i]); 
+                      return (Math.round( y*10)/10)}
+                }
+            }
+           
+                         
+            function operate(string){
+             
+             const array1= string.split(/[-+*]/);
+                for(let i=0;i<array1.length;i++){
+                 if (array1[i].includes('/')){
+                   let z= divide(array1[i]);
+                    string=string.replace(array1[i],z);
+                 }
+                }
+             const array2=string.split(/[-+]/);
+                for (let i=0;i<array2.length;i++){
+                    if (array2[i].includes('*')){
+                   let z= multiply(array2[i]);
+                    string=string.replace(array2[i],z);
+                 }
+            }
+            const array3=string.split(/[+]/);
+            for(let i=0;i<array3.length;i++){
+                if (array3[i].includes('-')){
+                   let z= subtract(array3[i]);
+                    string=string.replace(array3[i],z);
+                 }
+            }
+            let finalAnswer=add(string)
+            if(result.innerText=="error"||result.innerText=="Infinity"){
+                result.style.color="red"
+            }
+            else{result.style.color="black"}
+            if(!isNaN(finalAnswer)&&finalAnswer!=screen.innerText)
+            {result.innerText=finalAnswer}
+            }
+        
+            
+            
+        </script>
+    </body>
+</html>
