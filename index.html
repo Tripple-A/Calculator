@@ -16,8 +16,8 @@
             font-size: 150%;
             background: lightskyblue
         }
-
         button{
+            font-size: 120%;
             width:50px;
             height:50px;
             border-radius:5px;
@@ -26,7 +26,6 @@
             margin-top:2px;
             background: blue;
         }
-
         #block{
             border-radius:5px ;
             margin:10px auto;
@@ -34,7 +33,6 @@
             text-align: left;
             background: deepskyblue
         }
-
         #container{
             font-size: 90%
         }
@@ -46,10 +44,12 @@
             color:firebrick;
             text-align: center
         }
-
         .back{
-            width:150px;
+            width:115px;
+            font-size: 72%;
+            text-align: center;
         }
+        .On{font-size: 80%}
         
         </style>
     </head>
@@ -74,18 +74,24 @@
         <br>
         <button id="9" class="num">9</button>
         <button id="0" class="num">0</button>
-        <button onclick="c()"> Clear </button>
+        <button onclick="c()"> C </button>
         <button id="=" onclick="move()">=</button>
         <br>
         <button id="+" class="operators">+</button>
         <button id="-" class="operators">-</button>
         <button id="/" class="operators">/</button>
-        <button id='*' class="operators">*</button>
+        <button id='x' class="operators">x</button>
         <br>
-        <button id= ""  class="back num" onclick="back()">BACKSPACE</button>
-        
+        <button class='On' onclick="document.location.reload()">OFF</button>
+        <button class="back num" onclick="back()">BACKSPACE</button>
+        <button class='On' id='On' onclick="enable()">ON</button>
         </div>
         <script>
+            var btns = Array.from(document.querySelectorAll("button")); 
+            btns.forEach(button=>{if(button.id!='On'){button.disabled=true}}) 
+            function enable(){
+                btns.forEach(button=>{button.disabled=false})
+            }
             const screen=document.getElementById('container')
             const result=document.getElementById('result')
             result.style.color="black"
@@ -110,13 +116,12 @@
                 sign.addEventListener("click",function(){
                     const clicked=screen.innerText.charAt(screen.innerText.length-1)
                     
-                    if(screen.innerText.length<21&& clicked!='+'&&clicked!='-'&&clicked!='*'&&clicked!='/'){
+                    if(screen.innerText.length<21&& clicked!='+'&&clicked!='-'&&clicked!='x'&&clicked!='/'){
                         screen.append(sign.id)
                     }
                  })
             })
             
-
             function c(){
                result.innerText="";
                screen.innerText=""
@@ -140,16 +145,14 @@
               
                return y
             }
-
             function multiply(content){
-              let x=content.split('*');
+              let x=content.split('x');
                 let y=1;
                 for(let i=0;i<x.length;i++){ 
                     y*=parseFloat(x[i])
                 } 
                 return  y
             }
-
             function subtract(content){
                 
                 let x=content.split('-');
@@ -159,7 +162,6 @@
                 }
                 return y
                 }
-
             function divide(content){
                 
                 let x=content.split('/');
@@ -173,16 +175,16 @@
                         return "Error"
                         }
                   else {  
-                      y/=parseFloat(x[i]); 
+                      y/=parseFloat(x[i]);
+                      return y }
                       //return (Math.round( y*10)/10)}
-                      return y}
                 }
             }
            
                          
             function operate(string){
              
-             const array1= string.split(/[-+*]/);
+             const array1= string.split(/[-+x]/);
                 for(let i=0;i<array1.length;i++){
                  if (array1[i].includes('/')){
                    let z= divide(array1[i]);
@@ -191,12 +193,11 @@
                 }
              const array2=string.split(/[-+]/);
                 for (let i=0;i<array2.length;i++){
-                    if (array2[i].includes('*')){
+                    if (array2[i].includes('x')){
                    let z= multiply(array2[i]);
                     string=string.replace(array2[i],z);
                  }
             }
-
             const array3=string.split(/[+]/);
             for(let i=0;i<array3.length;i++){
                 if (array3[i].includes('-')){
@@ -204,14 +205,11 @@
                     string=string.replace(array3[i],z);
                  }
             }
-
             let finalAnswer=add(string)
-
             if(result.innerText=="error"||result.innerText=="Infinity"){
                 result.style.color="red"
             }
             else{result.style.color="black"}
-
             if(!isNaN(finalAnswer)&&finalAnswer!=screen.innerText)
             {result.innerText=Math.round(finalAnswer*1000)/1000}
             }
@@ -220,4 +218,4 @@
             
         </script>
     </body>
-    </html>
+</html>
