@@ -15,7 +15,7 @@ This is a calculator built as part of my assessments in a bid to get admission i
 
 <!-- User features -->
 ## User Features
-* A viewer can turn on and off this calculator.
+* A user can turn on and off this calculator.
 * A user can make calculations that obey the law of BODMAS.
 <!-- BUILT WITH -->
 ## Built With
@@ -26,7 +26,7 @@ This is a calculator built as part of my assessments in a bid to get admission i
 
 <!-- LIVE PREVIEW -->
 ## LIVE PREVIEW
-The live version can be found[here](https://tripple-a.github.io/Calculator/)
+The live version can be found [here](https://tripple-a.github.io/Calculator/)
 
 
 <!-- REQUIRED INSTALLATION -->
